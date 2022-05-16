@@ -13,9 +13,11 @@ import java.util.Arrays;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
+    private final UserRepository userRepository;
     @Autowired
-    private UserRepository userRepository;
-
+    public TestConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
