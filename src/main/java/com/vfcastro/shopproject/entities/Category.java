@@ -1,5 +1,6 @@
 package com.vfcastro.shopproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private final Set<Product> products = new HashSet<>();
 
     public Category() {
