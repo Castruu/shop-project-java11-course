@@ -1,6 +1,8 @@
 package com.vfcastro.shopproject.resources;
 
+import com.vfcastro.shopproject.entities.Order;
 import com.vfcastro.shopproject.entities.User;
+import com.vfcastro.shopproject.services.OrderService;
 import com.vfcastro.shopproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,25 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/orders")
+public class OrderResource {
 
-    private final UserService service;
+    private final OrderService service;
 
     @Autowired
-    public UserResource(UserService service) {
+    public OrderResource(OrderService service) {
         this.service = service;
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = service.findAll();
+    public ResponseEntity<List<Order>> findAll() {
+        List<Order> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = service.findById(id);
+    public ResponseEntity<Order> findById(@PathVariable Long id) {
+        Order user = service.findById(id);
         return ResponseEntity.ok(user);
     }
 }
