@@ -1,5 +1,6 @@
 package com.vfcastro.shopproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vfcastro.shopproject.entities.pk.OrderItemPK;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class OrderItem implements Serializable {
     private final static long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrderItemPK id;
+    private final OrderItemPK id = new OrderItemPK();
 
     @Getter @Setter
     private Integer quantity;
@@ -32,6 +33,7 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
