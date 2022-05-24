@@ -1,5 +1,7 @@
 package com.vfcastro.shopproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +32,10 @@ public class Product implements Serializable {
     )
     private final Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    @Getter(AccessLevel.NONE)
+    private final Set<OrderItem> items = new HashSet<>();
+
     public Product() {}
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
@@ -38,6 +44,15 @@ public class Product implements Serializable {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for(OrderItem item : items) {
+            set.add(item.getOrder());
+        }
+        return set;
     }
 
     @Override

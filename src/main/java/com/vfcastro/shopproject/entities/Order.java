@@ -35,6 +35,9 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private final Set<OrderItem> items = new HashSet<>();
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
+
     public Order() {}
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
@@ -44,14 +47,6 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order)) return false;
-        Order order = (Order) o;
-        return Objects.equals(id, order.id);
-    }
-
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
     }
@@ -59,6 +54,18 @@ public class Order implements Serializable {
     public void setOrderStatus(OrderStatus orderStatus) {
         if(orderStatus == null) return;
         this.orderStatus = orderStatus.getCode();
+    }
+
+    public Double getTotal() {
+        return items.stream().map(OrderItem::getSubTotal).reduce(0.0, Double::sum);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
     }
 
     @Override
