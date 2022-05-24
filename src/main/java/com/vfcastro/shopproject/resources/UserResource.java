@@ -30,7 +30,7 @@ public class UserResource {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = service.findById(id);
-        return ResponseEntity.ok(user);
+        User order = service.findById(id);
+        return ResponseEntity.ok(order);
     }
 }
